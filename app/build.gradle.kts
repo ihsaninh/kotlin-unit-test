@@ -31,10 +31,21 @@ dependencies {
 
     // Use the Kotlin test library.
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+
+    // Use Mockito
+    testImplementation("org.mockito:mockito-junit-jupiter:4.4.0")
 }
 
 tasks.named<Test>("test") {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        excludeTags("integration_test")
+    }
+}
+
+tasks.register("integration_test", Test::class) {
+    useJUnitPlatform {
+        includeTags("integration_test")
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
